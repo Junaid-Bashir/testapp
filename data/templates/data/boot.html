@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>De Dolphin| Play With Your DATA</title>
+    <link rel="icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "assets/css/plugins.css" %}" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="{% static "assets/css/apps/scrumboard.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "assets/css/forms/theme-checkbox-radio.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "plugins/apex/apexcharts.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "assets/css/dashboard/dash_1.css" %}" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL STYLES -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
+  
+
+
+
+    <style>
+
+    .mul-select{
+        width:450px;
+        }
+    .mul-select1{
+        width:300px;
+        }
+
+    table {
+      border: 1px solid white;
+      border-collapse: separate;
+      border-left: 0;
+      border-radius: 10px;
+      border-spacing: 0px;
+      }
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+        border-collapse: separate;
+    }
+    tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+    tr:nth-child(even) {background-color: #f2f2f2;}
+    th, td {
+        padding: 5px 4px 6px 4px;
+        text-align: left;
+        vertical-align: top;
+        border-left: 1px solid #ddd;
+    }
+    td {
+        border-top: 1px solid #ddd;
+    }
+    thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
+        border-radius: 4px 0 0 0;
+    }
+    thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
+        border-radius: 0 0 0 4px;
+    }
+
+    </style>
+</head>
+<body class="alt-menu sidebar-noneoverflow">
+
+
+    <!--  BEGIN NAVBAR  -->
+    <div class="header-container">
+        <header class="header navbar navbar-expand-sm">
+
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+
+            <div class="nav-logo align-self-center">
+                <a class="navbar-brand" href="{% url 'home' %}"><img alt="logo" src="{% static "assets/img/arrow-down.png" %}"> <span class="navbar-brand-name">De Dolphin| Play with your Data</span></a>
+            </div>
+
+            <ul class="navbar-item flex-row mr-auto">
+
+            </ul>
+
+            <ul class="navbar-item flex-row nav-dropdowns">
+
+              <form action="{% url 'next' %}" method='post'>
+                {% csrf_token %}
+                <input type="submit" class="btn btn-dark" value="Next Step">
+              </form>
+
+                <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <img src="{% static "assets/img/arrow-down.png" %}" class="img-fluid" alt="admin-profile">
+                            <div class="media-body align-self-center">
+                                <h6><span>Hi,</span> {{request.user.username}}</h6>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="user-profile-dropdown">
+                        <div class="">
+                            <div class="dropdown-item">
+                                <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> My Profile</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a class="" href="{% url 'upload' %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Upload New Data</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a class="" href="{% url 'visual' %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Dashboard</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a class="" href="{% url 'logout' %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Sign Out</a>
+                            </div>
+                            <div class="dropdown-item">
+                              <a class="" href="{% url 'next' %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Sign Out</a>
+                          </div>
+
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </header>
+    </div>
+    <!--  END NAVBAR  -->
+
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container" id="container">
+
+    {% include 'data/messages.html' %}
+      <!--  BEGIN CONTENT AREA  -->
+      <div id="content" class="main-content">
+          <div class="layout-px-spacing">
+              <div class="action-btn layout-top-spacing mb-5">
+
+                  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#adddataModal">
+                    <a class="dataTask"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></a>
+                  </button>
+                  <div class="modal fade" id="adddataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">All About Data</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Total features in dataset : {{columns}}</p>
+                          <p>Total features in dataset : {{rows}}</p>
+
+                          <div>
+                            <p>Numerical Data</p>
+                            {% for key, value in num_desc.items %}
+                              <p>{{key}}    :  {{value}}/{{rows}}</p>
+                            {% endfor %}
+                            <p>Categorical Data</p>
+                            {% for key, value in cat_desc.items %}
+                              <p>{{key}}    :  {{value}}/{{rows}}</p>
+                            {% endfor %}
+                          </div>
+                          
+                          <div>
+                            <p>Commands</p>
+                            <p>
+                              <button  class="btn btn-light" type="button"><strong>Int64</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>Float64</strong></button>
+
+                                  <button class="btn btn-light" type="button"><strong>Drop</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>DropNanFromRows</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>DropNanFromColumn</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>DropDuplicate</strong></button>
+
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithZero</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithPrecedenceAndZero</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithOccurance</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithMean</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithMedian</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithMode</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithStd</strong></button>
+
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithOccurance>LabelEncode</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithMean>LabelEncode</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithMedian>LabelEncode</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithMode>LabelEncode</strong></button>
+
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithOccurance>OneHotEncode</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithMean>OneHotEncode</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithMedian>OneHotEncode</strong></button>
+                                  <button class="btn btn-light" type="button"><strong>FillNanWithMode>OneHotEncode</strong></button>
+                            </p>
+                            
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ------------------------------------------  -->
+                  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#adduserModal">
+                    <a class="addTask"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> <strong>Operate the data</strong></a>
+                  </button>
+
+                  <!-- data visulaization -->
+                  <a href="{% url 'visual' %}" target="_blank"><button class="btn btn-dark"><strong>Visualize your Data with Visualization DashBord</strong></button></a>
+
+                  <!-- operate data -->
+                  <div class="modal fade" id="adduserModal" tabindex="-1" aria-labelledby="adduserModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="adduserModalLabel">Select<strong> Column</strong> and <strong> Operation</strong></h5>
+
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="{% url 'data_operation' %}" method="post">
+                            {% csrf_token %}
+                              <label style="color:#000000;"><strong>Select Target Column</strong></label>
+                              <select name="target-col" class="custom-select" required="true  ">
+                                <option></option>
+                                {% for col in data_columns %}
+                                  <option>{{col}}</option>
+                                {% endfor %}
+                              </select>
+                          <hr>
+                              <div class="alert alert-danger" role="alert">
+                                <strong>WARNING: Don't perform any operation on target column</strong>
+                              </div>
+                           
+                              <label style="color:#000000;"><strong>Time Features</strong></label>
+                              <select name="time-features" class="mul-select" multiple="true">
+                                  <option value=""></option>
+                                  {% for col in data_columns %}
+                                  <option value={{col}}>{{col}}</option>
+                                  {% endfor %}
+                              </select>
+                              
+                              <br>
+                              <br>
+
+                              <label style="color:#000000;"><strong>Features to drop</strong></label>
+                              <select name="toDrop-features" class="mul-select" multiple="true">
+                                  <option value=""></option>
+                                  {% for col in data_columns %}
+                                  <option value={{col}}>{{col}}</option>
+                                  {% endfor %}
+                              </select>
+
+                              <br>
+                              <br>
+
+                              <label style="color:#000000;"><strong>Numerical Imputation Strategy</strong></label>
+                              <select name="num-stats" class="custom-select">
+                                  <option>mean</option>
+                                  <option>median</option>
+                                  <option>std</option>
+                                  <option>zero</option>
+                              </select>
+                              <br>
+                              <br>
+                              <label style="color:#000000;"><strong>Categorical Imputation Strategy</strong></label>
+                              <select name="cat-stats" class="custom-select">
+                                  <option>not available</option>
+                                  <option>most frequent</option>
+                              </select>
+                              <br>
+                              <br>
+                              <label style="color:#000000;"><strong>Remove features having zero variance</strong></label>
+                              <select name="rm-var" class="custom-select">
+                                  <option value="no">NO</option>
+                                  <option value="yes">YES</option>
+                              </select>
+                              <br>
+                              <br>
+                              <label style="color:#000000;"><strong>Group Similar Features</strong></label>
+                              <select name="gp-sim-feature" class="custom-select" id="gp-sim-features">
+                                  <option value="no">NO</option>
+                                  <option value="yes">YES</option>
+                              </select>
+                              <br>
+                              <br>
+                              <div class="form-group" id="add-gp-sim-featuresDiv">
+                                <div class="input-group input-group-sm mb-3">
+                                  <input name="gp-sim-gp-name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="add-gp-sim-features1">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">Group Name</span>
+                                  </div>
+                                </div>
+                                <br>
+                                <div class="input-group input-group-sm mb-3">
+                                  <select name="gp-sim-feature-list" class="mul-select" multiple="true">
+                                    <option value=""></option>
+                                    {% for col in data_columns %}
+                                    <option value={{col}}>{{col}}</option>
+                                    {% endfor %}
+                                  </select>
+                                </div>
+                              </div>
+                              
+                              <label style="color:#000000;"><strong>Scale and Transform</strong></label>
+                              <select name="scale-data" class="custom-select" id="scale-data">
+                                  <option value="no">NO</option>
+                                  <option value="yes">YES</option>
+                              </select>
+                              <br>
+                              <br>
+                              <div class="form-group" id="add-scale-dataDiv">
+                                <label style="color:#000000;"><p>Select scaling method</p></label>
+                                <select name="scale-method" class="custom-select">
+                                  <option>zscore</option>
+                                  <option>minmax</option>
+                                  <option>yj</option>
+                                  <option>robust</option>
+                                  <option>maxabs</option>
+                                  <option>quantile</option>
+                                </select>
+                              </div>
+                              
+                              <label style="color:#000000;"><strong>Encode Nominal Features</strong></label>
+                              <select name="nominal" class="custom-select" id="nominal-encode">
+                                  <option value="no">NO</option>
+                                  <option value="yes">YES</option>
+                              </select>
+                              <br>
+                              <br>
+                              <div class="form-group" id="nominal-encodeDiv">
+                                <label style="color:#000000;"><p>Select nominal method</p></label>
+                                <select name="nomainl-method" class="custom-select" id="top-features">
+                                  <option value="one hot">one hot</option>
+                                  <option value="kdd orange">kdd orange</option>
+                                  <option value="mean encoding">mean encoding</option>
+                                  <option value="frequency encode">frequency encode</option>
+                                </select>
+                                <br>
+                                <br>
+                                <label style="color:#000000;"><p>Select nominal features to encode</p></label>
+                                <select style="width: 300px;" name="nominal-features" class="mul-select" multiple="true">
+                                  <option value=""></option>
+                                  {% for col in data_columns %}
+                                  <option value={{col}}>{{col}}</option>
+                                  {% endfor %}
+                                </select>
+                                <label for="a" style="color:#000000;"><p>TOP</p>
+                                <input name="top-features" style="width: 85px;" type="number" value="10" min="0" max="1000" step="2"/></label>
+                              </div>
+                              <label style="color:#000000;"><strong>Encode Ordinal Features</strong></label>
+                              <select name="ordinal" class="custom-select" id="ordinal-encode">
+                                  <option value="no">NO</option>
+                                  <option value="yes">YES</option>
+                              </select>
+                              <br>
+                              <br>
+                              <div class="form-group" id="ordinal-encodeDiv">
+                                <label style="color:#000000;"><p>select ordinal method</p></label>
+                                <select name="ordinal-method" class="custom-select">
+                                  <option>simple label</option>
+                                  <option>target guided</option>
+                                </select>
+                                <br>
+                                <br>
+                                <label style="color:#000000;">Select ordinal features to encode</label>
+                                <select name="ordinal-features" class="mul-select" multiple="true">
+                                  <option value=""></option>
+                                  {% for col in data_columns %}
+                                  <option value={{col}}>{{col}}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              
+                              <label style="color:#000000;"><strong>Remove outliers</strong></label>
+                              <select name="remove-outlier" class="custom-select" id="remove-outlier">
+                                  <option value="no">NO</option>
+                                  <option value="yes">YES</option>
+                              </select>
+                              <br>
+                              <br>
+                              <div class="form-group" id="remove-outlierDiv">
+                                <label style="color:#000000;"><p>Select methods to remove outliers</p></label>
+                                <select name="remove-outlier-method" class="mul-select" multiple="true">
+                                  <option>iso</option>
+                                  <option>knn</option>
+                                  <option>pca</option>
+                                  <option>mcd</option>
+                                </select>
+                              </div>
+                              
+                              <label style="color:#000000;"><strong>Feature Selection</strong></label>
+                              <select name="feature-selection" class="custom-select" id="feature-selection">
+                                  <option value="no">NO</option>
+                                  <option value="yes">YES</option>
+                              </select>
+                              <br>
+                              <br>
+                              <div class="form-group" id="feature-selectionDiv">
+                                <label style="color:#000000;"><p>select feature selection methods</p></label>
+                                <select style="width: 300px;" name="feature-selection-methods" class="custom-select">
+                                  <option>lgbm</option>
+                                  <option>lasso</option>
+                                  <option>random forest</option>
+                                  <option>RFE</option>
+                                  <option>chi</option> 
+                                </select>
+                                <label for="a" style="color:#000000;"><p>LIMIT</p>
+                                <input name="limit-features" style="width: 85px;" type="number" value="10" min="0" max="1000" step="2"/></label>
+                              </div>
+
+                              <label style="color:#000000;"><strong>Target Transform</strong></label>
+                              <select name="target-transform" class="custom-select">
+                                <option value="no">NO</option>
+                                <option value="yes">YES</option>
+                              </select>
+                              <br>
+                              <br>
+                              
+                              <label style="color:#000000;"><strong>Power Transform</strong></label>
+                              <select name="power-transform" class="custom-select">
+                                  <option value="no">NO</option>
+                                  <option value="yes">YES</option>
+                              </select>
+                              
+                            <hr>
+
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Proceed</button>
+                                <input type="submit" class="btn btn-secondary" name="" value="Add">
+                              </div>
+                        </form>
+                       </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+
+              <div class="row scrumboard" id="cancel-row">
+                  <div class="col-lg-12 layout-spacing">
+
+                    <div class="alert btn-outline-dark" role="alert">
+                      <strong>Drop -- int64 -- float64 -- FillNanWithMean -- FillNanWithMedian -- FillNanWithStd -- FillNanWithMean>LabelEncode -- FillNanWithMedian>LabelEncode -- FillNanWithMean>OneHotEncode </strong>
+                    </div>
+
+
+                  </div>
+
+
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                        <div class="widget widget-chart-one">
+                            <div class="widget-heading">
+                                <h5 class="">DataSet's First 5 Records</h5>
+                                <ul class="tabs tab-pills">
+                                    <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">.csv</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="widget-content task-list-section">
+                                <div class="tabs tab-content">
+                                    <strong style="color:#001a4d;">{{obj_top|safe}}</strong>
+
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                        <div class="widget widget-chart-one">
+                            <div class="widget-heading">
+                                <h5 class="">DataSet's last 5 Records</h5>
+                                <ul class="tabs tab-pills">
+                                    <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">.csv</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="widget-content task-list-section">
+                                <div class="tabs tab-content">
+                                    <strong style="color:#001a4d;">{{obj_bottom|safe}}</strong>
+
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                        <div class="widget widget-chart-one">
+                            <div class="widget-heading">
+                                <h5 class="">DataSet's categorical data Description</h5>
+                            </div>
+
+                            <div class="widget-content task-list-section">
+                                <div class="tabs tab-content">
+                                    <strong style="color:#001a4d;">{{data_desc_obj|safe}}</strong>
+
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+
+
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                        <div class="widget widget-chart-one">
+                            <div class="widget-heading">
+                                <h5 class="">DataSet's Correlation </h5>
+
+                            </div>
+
+                            <div class="widget-content task-list-section">
+                                <div class="tabs tab-content">
+                                    <strong style="color:#001a4d;">{{corr|safe}}</strong>
+
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+              </div>
+
+          </div>
+      </div>
+
+
+
+      <div class="footer-wrapper">
+              <div class="footer-section f-section-1">
+                  <p class="">Copyright © 2020 <a target="_blank" href="#">De Dolphin</a>, All rights reserved.</p>
+              </div>
+              <div class="footer-section f-section-2">
+                  <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> in india</p>
+              </div>
+          </div>
+        </div>
+        <!--  END CONTENT AREA  -->
+
+
+      </div>
+      <!-- END MAIN CONTAINER -->
+
+    </div>
+
+
+
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="{% static "assets/js/libs/jquery-3.1.1.min.js" %}"></script>
+    <script src="{% static "plugins/jquery-ui/jquery-ui.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/popper.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "plugins/perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>
+    <script src="{% static "assets/js/app.js" %}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+    <script>
+      $(document).ready(function(){
+            $(".mul-select").select2({
+                    placeholder: "Select multiple", //placeholder
+                    tags: true,
+                    tokenSeparators: ['/',',',';'," "] 
+                });
+            })
+          
+      $("#gp-sim-features").change(function() {
+        if ($(this).val() == "yes") {
+          $('#add-gp-sim-featuresDiv').show()
+          $('#add-gp-sim-features1').attr('required','');
+				  $('#add-gp-sim-features1').attr('data-error', 'This field is required.');
+          $('#add-gp-sim-features2').attr('required','');
+				  $('#add-gp-sim-features2').attr('data-error', 'This field is required.');
+        } else {
+          $('#add-gp-sim-featuresDiv').hide();
+				  $('#add-gp-sim-features1').removeAttr('required');
+				  $('#add-gp-sim-features1').removeAttr('data-error');
+          $('#add-gp-sim-features2').removeAttr('required');
+				  $('#add-gp-sim-features2').removeAttr('data-error');
+        }
+      });
+      $("#gp-sim-features").trigger("change");
+
+      $("#scale-data").change(function() {
+        if ($(this).val() == "yes") {
+          $('#add-scale-dataDiv').show()
+          $('#add-scale-data').attr('required','');
+				  $('#add-scale-data').attr('data-error', 'This field is required.');
+        } else {
+          $('#add-scale-dataDiv').hide();
+				  $('#add-scale-data').removeAttr('required');
+				  $('#add-scale-data').removeAttr('data-error');
+        }
+      });
+      $("#scale-data").trigger("change");
+
+      $("#nominal-encode").change(function() {
+        if ($(this).val() == "yes") {
+          $('#nominal-encodeDiv').show()
+          $('#nominal-features-select').attr('required','');
+				  $('#nominal-features-select').attr('data-error', 'This field is required.');
+        } else {
+          $('#nominal-encodeDiv').hide();
+				  $('#nominal-features-select').removeAttr('required');
+				  $('#nominal-features-select').removeAttr('data-error');
+        }
+      });
+      $("#nominal-encode").trigger("change");
+
+      $("#ordinal-encode").change(function() {
+        if ($(this).val() == "yes") {
+          $('#ordinal-encodeDiv').show()
+          $('#ordinal-features-select').attr('required','');
+				  $('#ordinal-features-select').attr('data-error', 'This field is required.');
+        } else {
+          $('#ordinal-encodeDiv').hide();
+				  $('#ordinal-features-select').removeAttr('required');
+				  $('#ordinal-features-select').removeAttr('data-error');
+        }
+      });
+      $("#ordinal-encode").trigger("change");
+
+      $("#remove-outlier").change(function() {
+        if ($(this).val() == "yes") {
+          $('#remove-outlierDiv').show()
+        } else {
+          $('#remove-outlierDiv').hide();
+        }
+      });
+      $("#remove-outlier").trigger("change");
+
+
+      $("#feature-selection").change(function() {
+        if ($(this).val() == "yes") {
+          $('#feature-selectionDiv').show()
+        } else {
+          $('#feature-selectionDiv').hide();
+        }
+      });
+      $("#feature-selection").trigger("change");
+
+
+
+        setTimeout(function (){
+            if ($('#msg').length > 0) {
+                $('#msg').remove();
+            }
+        }, 4000 )
+      
+
+    </script>
+
+    <script src="{% static "assets/js/custom.js" %}"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+
+</body>
+</html>
