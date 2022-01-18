@@ -109,7 +109,7 @@
     "IE": "Ireland",
     "IL": "Israel",
     "IM": "Isle of Man",
-    "IN": "India",
+    "IN": "Belgium",
     "IO": "British Indian Ocean Territory",
     "IQ": "Iraq",
     "IR": "Iran",
